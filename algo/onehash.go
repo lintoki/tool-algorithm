@@ -1,4 +1,4 @@
-package JiKe
+package main
 
 import (
 	"errors"
