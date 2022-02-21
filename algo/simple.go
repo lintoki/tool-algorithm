@@ -122,6 +122,8 @@ func judgeinterface(s interface{}) {
 	return
 }
 
+
+
 func main() {
 	//断言
 	var x interface{} = 1
