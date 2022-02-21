@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 //无缓冲通道
@@ -51,10 +52,35 @@ func c2() {
 	printer(sqn)
 }
 
+//select
+func sel() {
+	nozs := make(chan int64, 1)
+
+	go func() {
+		time.Sleep(time.Second * 2)
+		fmt.Println(time.Now().Unix())
+		nozs <- time.Now().Unix()
+	}()
+
+	select {
+	case x := <-nozs:
+		fmt.Println(x)
+	case <-time.After(time.Second * 7):
+		fmt.Println(22)
+		//default:
+		//	fmt.Println(777)
+	}
+
+	return
+}
+
 func main() {
 	//无缓冲通道
 	//c1()
 
 	//管道
-	c2()
+	//c2()
+
+	//select
+	sel()
 }
