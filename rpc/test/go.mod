@@ -1,4 +1,4 @@
-module fly
+module test
 
 go 1.15
 
