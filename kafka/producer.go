@@ -43,6 +43,7 @@ func init() {
 func produceMsg(msg string) {
 	msgX := &sarama.ProducerMessage{
 		Topic:     topic,
+		Key:       sarama.StringEncoder(time.Now().String()),
 		Value:     sarama.StringEncoder(msg),
 		Partition: int32(time.Now().Unix() % 5),
 	}
