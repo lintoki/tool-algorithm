@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 //斐波那契额数列
@@ -122,14 +123,68 @@ func judgeinterface(s interface{}) {
 	return
 }
 
+//循环打印数字和字母
+func printNUmWord() {
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	var nums, words = make(chan int), make(chan int)
 
+	go printNum(&wg, nums, words)
+	go printWord(&wg, nums, words)
+
+	nums <- 1
+	wg.Wait()
+}
+
+func printNum(wg *sync.WaitGroup, nums chan int, words chan int) {
+	i := 1
+	for {
+		select {
+		case <-nums:
+			fmt.Print(i)
+			i++
+			words <- 1
+		}
+	}
+}
+
+func printWord(wg *sync.WaitGroup, nums chan int, words chan int) {
+	i := 'A'
+	for {
+		select {
+		case <-words:
+			if i > 'Z' {
+				wg.Done()
+				return
+			}
+
+			fmt.Print(string(i))
+			i++
+			nums <- 1
+		}
+
+	}
+}
+
+//翻转字符串
+func reverString(s string) (string, bool) {
+	str := []rune(s)
+	l := len(str)
+	for i := 0; i < l/2; i++ {
+		str[i], str[l-1-i] = str[l-1-i], str[i]
+	}
+	return string(str), true
+}
 
 func main() {
+	//循环打印数字字母
+	printNUmWord()
+
 	//断言
-	var x interface{} = 1
-	if f, ok := x.(int); ok {
-		fmt.Println(f)
-	}
+	//var x interface{} = 1
+	//if f, ok := x.(int); ok {
+	//	fmt.Println(f)
+	//}
 
 	//fib2(5)
 	//var i int8 = 127
