@@ -3,9 +3,8 @@ module tool-algorithm
 go 1.15
 
 require (
-	github.com/RoaringBitmap/roaring v1.2.1 // indirect
+	github.com/RoaringBitmap/roaring v1.2.1
 	github.com/Shopify/sarama v1.34.1
-	github.com/confluentinc/confluent-kafka-go v1.9.0
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/pierrec/lz4/v4 v4.1.15 // indirect

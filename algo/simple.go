@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"sync"
 )
 
@@ -177,8 +178,14 @@ func reverString(s string) (string, bool) {
 }
 
 func main() {
+	var a interface{}
+	a = nil
+	if a != nil && reflect.TypeOf(a).String() != "string" {
+		fmt.Println(reflect.TypeOf(a).String() == "string")
+	}
+
 	//循环打印数字字母
-	printNUmWord()
+	//printNUmWord()
 
 	//断言
 	//var x interface{} = 1
