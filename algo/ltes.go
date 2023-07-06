@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 type tl struct {
 	data int
@@ -73,7 +76,7 @@ func revList(l *tl) {
 
 	var tmp *tl
 	//var prev *tl //记录上一次处理的节点，最后一次要用
-	i:=1
+	i := 1
 	for {
 
 		if cur.next == nil {
@@ -102,13 +105,75 @@ func (l *tl) addSingle(data int) {
 	}
 }
 
-func main() {
-	head := new(tl).newt(1)
-	for i := 2; i < 5; i++ {
-		head.addSingle(i)
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func reverseList(head *ListNode) *ListNode {
+	var rev *ListNode
+	rev = nil
+	cur := head
+	for cur != nil {
+		next := cur.Next
+		cur.Next = rev
+		rev = cur
+		cur = next
 	}
 
-	head.list()
+	return rev
+}
+
+func TestReverseList(t *testing.T) {
+	// 构造一个链表 1 -> 2 -> 3 -> 4 -> 5
+	head := &ListNode{Val: 1}
+	node1 := &ListNode{Val: 2}
+	node2 := &ListNode{Val: 3}
+	node3 := &ListNode{Val: 4}
+	node4 := &ListNode{Val: 5}
+	head.Next = node1
+	node1.Next = node2
+	node2.Next = node3
+	node3.Next = node4
+
+	// 打印原始链表所有节点的值
+	fmt.Print("original list: ")
+	for p := head; p != nil; p = p.Next {
+		fmt.Printf("%d ", p.Val)
+	}
+	fmt.Println()
+
+	// 反转链表
+	reversedHead := reverseList(head)
+
+	// 打印反转后的链表所有节点的值
+	fmt.Print("reversed list: ")
+	for p := reversedHead; p != nil; p = p.Next {
+		fmt.Printf("%d ", p.Val)
+	}
+	fmt.Println()
+
+	// 验证反转结果是否正确
+	if reversedHead.Val != 5 {
+		t.Errorf("reversed head value is %d, want %d", reversedHead.Val, 5)
+	}
+	if reversedHead.Next.Val != 4 {
+		t.Errorf("reversed head next value is %d, want %d", reversedHead.Next.Val, 4)
+	}
+	if reversedHead.Next.Next.Next.Val != 2 {
+		t.Errorf("reversed head next next next value is %d, want %d", reversedHead.Next.Next.Next.Val, 2)
+	}
+}
+
+func main() {
+	a := testing.T{}
+	TestReverseList(&a)
+	//head := new(tl).newt(1)
+	//for i := 2; i < 5; i++ {
+	//	head.addSingle(i)
+	//}
+	//
+	//head.list()
 
 	//for i := 2; i < 5; i++ {
 	//	head.add(i)
