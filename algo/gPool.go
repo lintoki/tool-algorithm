@@ -22,12 +22,17 @@ func NewGPool(size int) *gPool {
 		wg:        &sync.WaitGroup{},
 	}
 
-	for i := 0; i < size; i++ {
+	return g
+}
+
+func (g gPool) run() {
+	for i := 0; i < g.size; i++ {
 		g.wg.Add(1)
-		go g.run()
+		go g.work()
 	}
 
-	return g
+	close(g.worker)
+	g.wg.Wait()
 }
 
 func (g gPool) submit(fn func()) string {
@@ -40,7 +45,7 @@ func (g gPool) submit(fn func()) string {
 
 }
 
-func (g gPool) run() {
+func (g gPool) work() {
 	defer g.wg.Done()
 
 	for {
@@ -75,6 +80,5 @@ func main() {
 
 	}
 
-	close(p.worker)
-	p.wg.Wait()
+	p.run()
 }
