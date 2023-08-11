@@ -185,6 +185,37 @@ func monkeyKing(num int) {
 	return
 }
 
+//是否是环链表
+//定义一个函数hasCycle，接受一个头节点head，返回一个布尔值表示链表是否有环
+func hasCycle(head *ListNode) bool {
+	if head == nil { // 如果头节点为空，则返回false
+		return false
+	}
+	slow := head                          // 定义一个慢指针，并初始化为头节点
+	fast := head                          // 定义一个快指针，并初始化为头节点
+	for fast != nil && fast.Next != nil { // 用一个循环来移动快慢指针，直到快指针到达尾节点或者快慢指针相遇
+		slow = slow.Next      // 将慢指针向后移动一个节点
+		fast = fast.Next.Next // 将快指针向后移动两个节点
+		if slow == fast {     // 如果快慢指针相等，则说明有环，返回true
+			return true
+		}
+	}
+	return false // 如果循环结束，说明没有环，返回false
+}
+
+//链表反转
+func reverseList(head *ListNode) *ListNode {
+	var pre *ListNode // 前一个节点
+	cur := head       // 当前节点
+	for cur != nil {
+		temp := cur.Next // 保存下一个节点
+		cur.Next = pre   // 将当前节点的Next指针指向前一个节点
+		pre = cur        // 将前一个节点更新为当前节点
+		cur = temp       // 将当前节点更新为下一个节点
+	}
+	return pre // 返回新的头节点
+}
+
 func main() {
 	//findKthLargest(arr, 4)
 	monkeyKing(4)

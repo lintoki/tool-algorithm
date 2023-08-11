@@ -110,19 +110,19 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func reverseList(head *ListNode) *ListNode {
-	var rev *ListNode
-	rev = nil
-	cur := head
-	for cur != nil {
-		next := cur.Next
-		cur.Next = rev
-		rev = cur
-		cur = next
-	}
-
-	return rev
-}
+//func reverseList(head *ListNode) *ListNode {
+//	var rev *ListNode
+//	rev = nil
+//	cur := head
+//	for cur != nil {
+//		next := cur.Next
+//		cur.Next = rev
+//		rev = cur
+//		cur = next
+//	}
+//
+//	return rev
+//}
 
 func TestReverseList(t *testing.T) {
 	// 构造一个链表 1 -> 2 -> 3 -> 4 -> 5
